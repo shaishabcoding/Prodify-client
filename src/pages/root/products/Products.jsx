@@ -1,14 +1,18 @@
 import { useState } from "react";
 import useProducts from "../../../hooks/useProducts";
+import useBrands from "../../../hooks/useBrands";
 import ProductsCard from "./components/ProductsCard";
 import Loading from "../../../shared/loading/Loading";
 
 const Products = () => {
   const [query, setQuery] = useState("");
   const [sort, setSort] = useState("");
+  const [brand, setBrand] = useState("");
   const [page, setPage] = useState(0);
   const [{ products, productsCount }, refetch, isFetching, isPreviousData] =
     useProducts(page, query, sort);
+  const [brands] = useBrands();
+  console.log(brands);
 
   const searchProducts = async (e) => {
     e.preventDefault();
@@ -21,11 +25,8 @@ const Products = () => {
       <h2 className="text-2xl lg:mt-10 lg:mb-12 lg:text-5xl font-semibold text-center mb-6">
         All Products ({productsCount})
       </h2>
-      <div className="flex flex-wrap gap-2 md:gap-4 w-fit mx-auto">
-        <form
-          onSubmit={searchProducts}
-          className="flex justify-center mb-4 md:mb-6"
-        >
+      <div className="flex flex-row flex-wrap gap-2 md:gap-4 w-fit md:mx-auto mb-4">
+        <form onSubmit={searchProducts} className="flex justify-center md:mb-6">
           <div className="join">
             <div>
               <div>
@@ -61,6 +62,23 @@ const Products = () => {
           <option value="priceHighToLow">Low Price</option>
           <option value="dateNewest">New Products</option>
           <option value="">All Products</option>
+        </select>
+        <select
+          onChange={(e) => {
+            setBrand(e.target.value);
+          }}
+          defaultValue=""
+          className="select w-fit dark:bg-gray-500 dark:text-white grow select-bordered select-sm md:select-md"
+        >
+          <option disabled value="">
+            Brand
+          </option>
+          <option value="">All Brands</option>
+          {brands.map((brand, idx) => (
+            <option value={brand} key={idx}>
+              {brand}
+            </option>
+          ))}
         </select>
       </div>
       {isFetching && <Loading className="mb-4 md:my-4 lg:my-10" />}
