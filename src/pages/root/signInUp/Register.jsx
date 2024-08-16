@@ -134,7 +134,7 @@ const Register = () => {
           <button
             disabled={loading}
             type="submit"
-            className="btn w-full bg-primary-light dark:bg-primary-dark text-white"
+            className="btn w-full bg-orange-600 dark:bg-orange-700 text-white"
           >
             {loading ? (
               <Loading className="my-0 text-primary" />

@@ -88,7 +88,7 @@ const Login = () => {
           <div>
             <button
               type="submit"
-              className="btn w-full bg-primary-light dark:bg-primary text-white dark:border-gray-400"
+              className="btn w-full bg-orange-600 dark:bg-orange-700 text-white dark:border-gray-400"
             >
               Login <FiLogIn />
             </button>
