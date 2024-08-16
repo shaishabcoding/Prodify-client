@@ -1,3 +1,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+#navbar a {
+  @apply text-gray-600 dark:text-gray-200;
+}
+#navbar .active {
+  @apply bg-white border-b-2 border-orange-600 dark:border-white dark:bg-white/20 dark:text-white font-bold;
+}
+body {
+  @apply font-open-sans select-none;
+}
