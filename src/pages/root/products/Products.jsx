@@ -5,9 +5,10 @@ import Loading from "../../../shared/loading/Loading";
 
 const Products = () => {
   const [query, setQuery] = useState("");
+  const [sort, setSort] = useState("");
   const [page, setPage] = useState(0);
   const [{ products, productsCount }, refetch, isFetching, isPreviousData] =
-    useProducts(page, query);
+    useProducts(page, query, sort);
 
   const searchProducts = async (e) => {
     e.preventDefault();
@@ -20,31 +21,48 @@ const Products = () => {
       <h2 className="text-2xl lg:mt-10 lg:mb-12 lg:text-5xl font-semibold text-center mb-6">
         All Products ({productsCount})
       </h2>
-      <form
-        onSubmit={searchProducts}
-        className="flex justify-center mb-4 md:mb-6"
-      >
-        <div className="join">
-          <div>
+      <div className="flex flex-wrap gap-2 md:gap-4 w-fit mx-auto">
+        <form
+          onSubmit={searchProducts}
+          className="flex justify-center mb-4 md:mb-6"
+        >
+          <div className="join">
             <div>
-              <input
-                className="input input-sm md:input-md input-bordered join-item border-primary"
-                type="text"
-                name="query"
-                placeholder="Search for users..."
-              />
+              <div>
+                <input
+                  className="input input-sm md:input-md input-bordered join-item border-primary"
+                  type="text"
+                  name="query"
+                  placeholder="Search for users..."
+                />
+              </div>
+            </div>
+            <div className="indicator">
+              <button
+                type="submit"
+                className="btn btn-sm md:btn-md join-item btn-primary"
+              >
+                Search
+              </button>
             </div>
           </div>
-          <div className="indicator">
-            <button
-              type="submit"
-              className="btn btn-sm md:btn-md join-item btn-primary"
-            >
-              Search
-            </button>
-          </div>
-        </div>
-      </form>
+        </form>
+        <select
+          onChange={(e) => {
+            setSort(e.target.value);
+          }}
+          defaultValue=""
+          className="select w-fit dark:bg-gray-500 dark:text-white grow select-bordered select-sm md:select-md"
+        >
+          <option disabled value="">
+            Sort
+          </option>
+          <option value="priceLowToHigh">High Price</option>
+          <option value="priceHighToLow">Low Price</option>
+          <option value="dateNewest">New Products</option>
+          <option value="">All Products</option>
+        </select>
+      </div>
       {isFetching && <Loading className="mb-4 md:my-4 lg:my-10" />}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {products?.map((product, idx) => (
