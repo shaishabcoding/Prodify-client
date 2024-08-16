@@ -1,6 +1,7 @@
 import { useState } from "react";
 import useProducts from "../../../hooks/useProducts";
 import useBrands from "../../../hooks/useBrands";
+import useCategories from "../../../hooks/useCategories";
 import ProductsCard from "./components/ProductsCard";
 import Loading from "../../../shared/loading/Loading";
 
@@ -8,11 +9,12 @@ const Products = () => {
   const [query, setQuery] = useState("");
   const [sort, setSort] = useState("");
   const [brand, setBrand] = useState("");
+  const [category, setCategory] = useState("");
   const [page, setPage] = useState(0);
   const [{ products, productsCount }, refetch, isFetching, isPreviousData] =
-    useProducts(page, query, sort);
+    useProducts(page, query, sort, brand, category);
   const [brands] = useBrands();
-  console.log(brands);
+  const [categories] = useCategories();
 
   const searchProducts = async (e) => {
     e.preventDefault();
@@ -77,6 +79,23 @@ const Products = () => {
           {brands.map((brand, idx) => (
             <option value={brand} key={idx}>
               {brand}
+            </option>
+          ))}
+        </select>
+        <select
+          onChange={(e) => {
+            setCategory(e.target.value);
+          }}
+          defaultValue=""
+          className="select w-fit dark:bg-gray-500 dark:text-white grow select-bordered select-sm md:select-md"
+        >
+          <option disabled value="">
+            Category
+          </option>
+          <option value="">All Categories</option>
+          {categories.map((category, idx) => (
+            <option value={category} key={idx}>
+              {category}
             </option>
           ))}
         </select>
