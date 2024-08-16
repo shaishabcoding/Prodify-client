@@ -3,6 +3,7 @@ import Root from "../layouts/root/Root";
 import Login from "../pages/root/signInUp/Login";
 import Register from "../pages/root/signInUp/Register";
 import Error from "../pages/404/Error";
+import Products from "../pages/root/products/Products";
 
 const router = createBrowserRouter([
   {
@@ -16,7 +17,7 @@ const router = createBrowserRouter([
       },
       {
         path: "products",
-        element: <p>hi</p>,
+        element: <Products />,
       },
       {
         path: "register",
