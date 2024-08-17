@@ -1,20 +1,20 @@
 import { MdStar, MdStarBorder } from "react-icons/md";
 import { TbListDetails } from "react-icons/tb";
 import Rating from "react-rating";
-import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const ProductsCard = ({
   product: {
+    _id,
     productName,
     productImage,
-    description,
     price,
     category,
     ratings,
-    productCreationDate,
     brandName,
   },
 }) => {
+  const navigate = useNavigate();
   return (
     <div className="rounded-lg h-full overflow-hidden flex flex-col border-2 border-gray-400 shadow-sm bg-gradient-to-bl from-green-50 dark:from-gray-700 via-pink-50 dark:via-gray-800 to-sky-50 dark:to-gray-700 dark:text-white dark:border-gray-500">
       <div className="relative border-b-2 border-gray-400">
@@ -43,7 +43,7 @@ const ProductsCard = ({
         <p className="mb-3">Price : ${price}</p>
         <div className="flex flex-col justify-end gap-3 grow">
           <button
-            onClick={() => toast.info("coming soon!")}
+            onClick={() => navigate(`/products/${_id}`)}
             className="btn btn-accent btn-sm dark:bg-gray-700 dark:text-white dark:border-gray-400"
           >
             View Details <TbListDetails />
