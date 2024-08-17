@@ -25,14 +25,6 @@ const useProducts = (
             min == 0 ? "" : min
           }&maxPrice=${max == 0 ? "" : max}`
         );
-        console.log(
-          `/products?search=${query}&offset=${
-            page * 10
-          }&sort=${sort}&brand=${brand}&category=${category}&minPrice=${
-            min == 0 ? "" : min
-          }&maxPrice=${max == 0 ? "" : max}`
-        );
-
         return res.data;
       },
       keepPreviousData: false,

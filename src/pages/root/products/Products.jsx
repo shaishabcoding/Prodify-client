@@ -27,6 +27,7 @@ const Products = () => {
 
   useEffect(() => {
     refetch();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sort, category, brand]);
 
   return (
@@ -84,8 +85,8 @@ const Products = () => {
             Sort
           </option>
           <option value="">All Products</option>
-          <option value="priceLowToHigh">High Price</option>
-          <option value="priceHighToLow">Low Price</option>
+          <option value="priceLowToHigh">Low Price</option>
+          <option value="priceHighToLow">High Price</option>
           <option value="dateNewest">New Products</option>
         </select>
         <select
