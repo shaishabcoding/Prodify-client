@@ -135,7 +135,7 @@ const Products = () => {
           <button
             onClick={() => setPage((old) => Math.max(old - 1, 0))}
             disabled={page === 0}
-            className="join-item btn btn-sm md:btn-md"
+            className="join-item btn btn-sm md:btn-md disabled:text-gray-400 disabled:dark:bg-gray-300 disabled:dark:text-gray-500"
           >
             «
           </button>
@@ -161,7 +161,7 @@ const Products = () => {
             disabled={
               isPreviousData || page >= Math.ceil(productsCount / 10) - 1
             }
-            className="join-item btn btn-sm md:btn-md"
+            className="join-item btn btn-sm md:btn-md disabled:text-gray-400 disabled:dark:bg-gray-300 disabled:dark:text-gray-500"
           >
             »
           </button>
