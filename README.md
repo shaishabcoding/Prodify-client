@@ -1,8 +1,12 @@
-# React + Vite
+# Prodify
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Product buy website
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Search Products**: Full-text search on product names and descriptions.
+- **Filter by Price Range**: Get products within a specified price range.
+- **Filter by Category**: Retrieve products belonging to a specific category.
+- **Filter by Brand**: Retrieve products from a specific brand.
+- **Sort Products**: Sort products by price (low to high, high to low) or by the date added (newest first).
+- **Pagination**: Limit the number of products returned and implement pagination.
