@@ -13,7 +13,7 @@ const useCategories = () => {
       return res.data;
     },
   });
-  return [data || {}, refetch];
+  return [data || [], refetch];
 };
 
 export default useCategories;

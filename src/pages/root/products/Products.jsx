@@ -4,6 +4,7 @@ import useBrands from "../../../hooks/useBrands";
 import useCategories from "../../../hooks/useCategories";
 import ProductsCard from "./components/ProductsCard";
 import Loading from "../../../shared/loading/Loading";
+import { useEffect } from "react";
 
 const Products = () => {
   const [query, setQuery] = useState("");
@@ -11,8 +12,10 @@ const Products = () => {
   const [brand, setBrand] = useState("");
   const [category, setCategory] = useState("");
   const [page, setPage] = useState(0);
-  const [{ products, productsCount }, refetch, isFetching, isPreviousData] =
-    useProducts(page, query, sort, brand, category);
+  const [min, setMin] = useState(0);
+  const [max, setMax] = useState(0);
+  const [{ products, productsCount }, refetch, isLoading, isPreviousData] =
+    useProducts(page, query, sort, brand, category, min, max);
   const [brands] = useBrands();
   const [categories] = useCategories();
 
@@ -22,31 +25,51 @@ const Products = () => {
     refetch();
   };
 
+  useEffect(() => {
+    refetch();
+  }, [sort, category, brand]);
+
   return (
     <div className="w-full lg:p-6 lg:px-0 px-2 lg:mx-0 lg:rounded-lg lg:my-6 my-1 py-6">
       <h2 className="text-2xl lg:mt-10 lg:mb-12 lg:text-5xl font-semibold text-center mb-6">
         All Products ({productsCount})
       </h2>
-      <div className="flex flex-row flex-wrap gap-2 md:gap-4 w-fit md:mx-auto mb-4">
-        <form onSubmit={searchProducts} className="flex justify-center md:mb-6">
-          <div className="join">
-            <div>
-              <div>
+      <div className="flex md:flex-row flex-col mx-auto justify-center items-center flex-wrap gap-2 md:gap-4 w-fit md:mx-auto mb-4">
+        <form onSubmit={searchProducts} className="flex justify-center">
+          <div className="flex flex-col md:flex-row md:w-fit w-full">
+            <div className="grow">
+              <div className="grid">
                 <input
-                  className="input input-sm md:input-md input-bordered join-item border-primary"
+                  className="input grow input-sm md:input-md md:border-r-0 input-bordered rounded-b-none md:rounded-bl-lg md:rounded-r-none border-b-0 md:border-b border-primary"
                   type="text"
                   name="query"
-                  placeholder="Search for users..."
+                  placeholder="Search Products..."
                 />
               </div>
             </div>
-            <div className="indicator">
-              <button
-                type="submit"
-                className="btn btn-sm md:btn-md join-item btn-primary"
-              >
-                Search
-              </button>
+            <div className="flex">
+              <input
+                onBlur={(e) => {
+                  setMin(+e.target.value);
+                }}
+                className="input border-primary dark:bg-gray-500 dark:text-white rounded-bl-lg md:rounded-bl-none rounded-none w-20 input-bordered input-sm md:input-md"
+                placeholder="Min"
+              />
+              <input
+                onBlur={(e) => {
+                  setMax(+e.target.value);
+                }}
+                className="input border-primary border-l-0 dark:bg-gray-500 dark:text-white rounded-none w-20 input-bordered input-sm md:input-md"
+                placeholder="Max"
+              />
+              <div className="indicator">
+                <button
+                  type="submit"
+                  className="btn btn-sm md:btn-md join-item rounded-t-none md:rounded-tr-lg rounded-bl-none md:rounded-l-none btn-primary"
+                >
+                  Search
+                </button>
+              </div>
             </div>
           </div>
         </form>
@@ -55,22 +78,22 @@ const Products = () => {
             setSort(e.target.value);
           }}
           defaultValue=""
-          className="select w-fit dark:bg-gray-500 dark:text-white grow select-bordered select-sm md:select-md"
+          className="select w-fit max-w-52 dark:bg-gray-500 dark:text-white grow select-bordered select-sm md:select-md"
         >
           <option disabled value="">
             Sort
           </option>
+          <option value="">All Products</option>
           <option value="priceLowToHigh">High Price</option>
           <option value="priceHighToLow">Low Price</option>
           <option value="dateNewest">New Products</option>
-          <option value="">All Products</option>
         </select>
         <select
           onChange={(e) => {
             setBrand(e.target.value);
           }}
           defaultValue=""
-          className="select w-fit dark:bg-gray-500 dark:text-white grow select-bordered select-sm md:select-md"
+          className="select w-fit max-w-52 dark:bg-gray-500 dark:text-white grow select-bordered select-sm md:select-md"
         >
           <option disabled value="">
             Brand
@@ -87,7 +110,7 @@ const Products = () => {
             setCategory(e.target.value);
           }}
           defaultValue=""
-          className="select w-fit dark:bg-gray-500 dark:text-white grow select-bordered select-sm md:select-md"
+          className="select w-fit max-w-52 dark:bg-gray-500 dark:text-white grow select-bordered select-sm md:select-md"
         >
           <option disabled value="">
             Category
@@ -100,7 +123,7 @@ const Products = () => {
           ))}
         </select>
       </div>
-      {isFetching && <Loading className="mb-4 md:my-4 lg:my-10" />}
+      {isLoading && <Loading className="mb-4 md:my-4 lg:my-10" />}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {products?.map((product, idx) => (
           <ProductsCard {...{ product }} key={idx} />

@@ -13,7 +13,7 @@ const useBrands = () => {
       return res.data;
     },
   });
-  return [data || {}, refetch];
+  return [data || [], refetch];
 };
 
 export default useBrands;
